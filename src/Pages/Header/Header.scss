@@ -1,0 +1,49 @@
+@import '/src/styles/variables.scss';
+
+.header {
+  @include flexCenter;
+  width: 100vw;
+  height: 10vh;
+  border-bottom: 1px solid #ededed;
+
+  .headerContext {
+    @include flexCenter;
+    width: 98%;
+    height: 90%;
+
+    .logo {
+      @include flexCenter;
+      width: 10%;
+
+      .logoImage {
+        width: 100%;
+        cursor: pointer;
+      }
+    }
+
+    .storesButtons {
+      @include flexCustom(flex-start, center);
+      padding: 0 10%;
+      width: 90%;
+
+      .storeBtn {
+        @include btnTransParent;
+        padding: 10px 20px;
+        margin: 0 20px;
+        border-radius: 35px;
+        color: gray;
+        cursor: pointer;
+
+        &:hover {
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          color: black;
+        }
+
+        &:active {
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+            rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+        }
+      }
+    }
+  }
+}
