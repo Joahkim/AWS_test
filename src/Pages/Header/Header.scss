@@ -39,10 +39,40 @@
           color: black;
         }
 
-        &:active {
-          box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
-            rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+        &:focus {
+          border: 2px solid rgb(17, 135, 207);
         }
+      }
+    }
+  }
+}
+.flatformHeader {
+  position: fixed;
+  z-index: 100;
+  .btnContainer {
+    display: flex;
+    padding: 10px;
+
+    .btnBox {
+      @include btnTransParent;
+      display: flex;
+      align-items: center;
+
+      padding: 5px 10px;
+      border-radius: 35px;
+      background-color: white;
+      margin-right: 5px;
+      cursor: pointer;
+
+      &:hover {
+        border: 2px solid rgb(17, 135, 207);
+      }
+      &:focus {
+        border: 2px solid rgb(17, 135, 207);
+      }
+
+      .btnText {
+        font-size: 12px;
       }
     }
   }
