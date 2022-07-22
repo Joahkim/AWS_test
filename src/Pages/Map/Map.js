@@ -89,7 +89,15 @@ function NaverMapAPI() {
 }
 
 const Map = () => {
-  return <div>안녕하세요</div>;
+  return (
+    <RenderAfterNavermapsLoaded
+      ncpClientId="n5yxltth29"
+      error={<p>Maps Load Error</p>}
+      loading={<p>Maps Loading...</p>}
+    >
+      <NaverMapAPI />
+    </RenderAfterNavermapsLoaded>
+  );
 };
 
 export default Map;
