@@ -54,7 +54,6 @@ function NaverMapAPI({ dongData }) {
           )}
         </>
       ))}
-
       <Polyline
         clickable={true}
         strokeColor="rgb(17, 135, 207)"
