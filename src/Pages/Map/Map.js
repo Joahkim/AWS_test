@@ -11,11 +11,12 @@ import {
   Marker,
   Polyline,
   Polygon,
+  Circle,
 } from 'react-naver-maps';
+import './Map.scss';
 
 function NaverMapAPI({ dongData }) {
   const navermaps = window.naver.maps;
-  const mapRef = useRef(null);
 
   const { onHoverPaths, handleHoverCoordinate } = usePolygon();
 
@@ -27,7 +28,6 @@ function NaverMapAPI({ dongData }) {
       style={{ width: '100%', height: '90vh', borderTop: 'transparent' }}
       defaultCenter={{ lat: 37.497175, lng: 127.027926 }}
       defaultZoom={13}
-      ref={mapRef}
     >
       {dongData.map(input => (
         <>
@@ -54,6 +54,13 @@ function NaverMapAPI({ dongData }) {
           )}
         </>
       ))}
+      <Circle
+        center={{ x: 127.027926, y: 37.497175 }}
+        radius={100}
+        fillOpacity={0.5}
+        fillColor="#FF0000"
+        strokeColor="red"
+      />
       <Polyline
         clickable={true}
         strokeColor="rgb(17, 135, 207)"
