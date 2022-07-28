@@ -57,11 +57,10 @@
       @include btnTransParent;
       display: flex;
       align-items: center;
-
       padding: 5px 10px;
       border-radius: 35px;
-      background-color: white;
       margin-right: 5px;
+      background-color: white;
       cursor: pointer;
 
       &:hover {
