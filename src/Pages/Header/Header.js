@@ -1,30 +1,61 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './Header.scss';
 
-const Header = () => {
-  return (
-    <header className="header">
-      <section className="headerContext">
-        <div className="logo">
-          <Link to="/" className="goToMain">
-            <img className="logoImage" src="/images/logo.png" alt="logo" />
-          </Link>
-        </div>
+const Header = ({
+  dongData,
+  sortStore,
+  sortApplication,
+  showAllAppData,
+  showAllStoreData,
+}) => {
+  const { applications, stores } = dongData[0];
 
-        <div className="storesButtons">
-          <button id="storeA" className="storeBtn">
-            A 매장
+  const goRefresh = () => {
+    window.open('http://localhost:3000/regions', '_self');
+  };
+
+  return (
+    <>
+      <header className="header">
+        <section className="headerContext">
+          <div className="logo">
+            <div className="goToMain" onClick={goRefresh}>
+              <img className="logoImage" src="/images/logo.png" alt="logo" />
+            </div>
+          </div>
+          <div className="storesButtons">
+            <button className="storeBtn" onClick={showAllStoreData}>
+              매장 전체 보기
+            </button>
+            {stores.map(data => (
+              <button
+                className="storeBtn"
+                onClick={() => sortStore(data.name)}
+                key={data.id}
+              >
+                {data.name}
+              </button>
+            ))}
+          </div>
+        </section>
+      </header>
+      <header className="flatformHeader">
+        <div className="btnContainer">
+          <button className="btnBox" onClick={showAllAppData}>
+            <span className="btnText">전체</span>
           </button>
-          <button id="storeB" className="storeBtn">
-            B 매장
-          </button>
-          <button id="storeC" className="storeBtn">
-            C 매장
-          </button>
+          {applications.map(input => (
+            <button
+              className="btnBox"
+              key={input.id}
+              onClick={() => sortApplication(input.name)}
+            >
+              <span className="btnText">{input.name}</span>
+            </button>
+          ))}
         </div>
-      </section>
-    </header>
+      </header>
+    </>
   );
 };
 

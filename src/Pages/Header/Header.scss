@@ -47,3 +47,35 @@
     }
   }
 }
+
+.flatformHeader {
+  position: fixed;
+  z-index: 100;
+  .btnContainer {
+    display: flex;
+    padding: 10px;
+
+    .btnBox {
+      @include btnTransParent;
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+      border-radius: 35px;
+      margin-right: 5px;
+      background-color: white;
+      cursor: pointer;
+
+      &:hover {
+        border: 2px solid rgb(17, 135, 207);
+      }
+
+      &:focus {
+        border: 2px solid rgb(17, 135, 207);
+      }
+
+      .btnText {
+        font-size: 12px;
+      }
+    }
+  }
+}

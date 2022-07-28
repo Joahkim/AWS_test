@@ -1,4 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
+import usePolygon from '../../hooks/usePolygon';
+import useInfoWindow from '../../hooks/useInfoWindow';
+import InfoWindow from './InfoWindow';
+
 import './Map.scss';
 
 import {
@@ -9,38 +13,13 @@ import {
   Polygon,
 } from 'react-naver-maps';
 
-function NaverMapAPI() {
+function NaverMapAPI({ dongData }) {
   const navermaps = window.naver.maps;
   const mapRef = useRef(null);
 
-  const [dongData, setDongData] = useState([]);
+  const { onHoverPaths, handleHoverCoordinate } = usePolygon();
 
-  useEffect(() => {
-    fetch(
-      'http://10.110.131.18:8000/regions?store=B매장&application=배달의민족'
-    )
-      .then(res => res.json())
-      .then(data => {
-        setDongData(data.result);
-      });
-  }, []);
-
-  // ?store=A매장
-  // &application=요기요
-
-  if (dongData.length === 0) return;
-
-  const getCoordinates = dongData[0].coordinate.coordinates;
-
-  const getPath = getCoordinates[0][0];
-
-  let newpaths = [];
-
-  getPath.forEach(coordinate => {
-    newpaths.push(new navermaps.LatLng(coordinate[1], coordinate[0]));
-  });
-
-  if (newpaths.length === 0) return;
+  const { handleInfoWindow, showInfoWindow, mouseOut } = useInfoWindow();
 
   return (
     <NaverMap
@@ -51,45 +30,55 @@ function NaverMapAPI() {
       ref={mapRef}
     >
       {dongData.map(input => (
-        <Marker
-          key={input.regions_code}
-          position={
-            new navermaps.LatLng(input.x_coordinate, input.y_coordinate)
-          }
-          animation={2}
-          icon={{
-            content: `<div class="markerBox">
-            <h1 class="markerCountText">${input.count}</h1>
+        <>
+          <Marker
+            key={input.regions_code}
+            position={
+              new navermaps.LatLng(input.x_coordinate, input.y_coordinate)
+            }
+            icon={{
+              content: `<div class="markerBox" >
+            <h1 class="markerCountText">${input.total_count}</h1>
             <p class="markerText">${input.ub_myeon_dong}</p>
             </div>`,
-          }}
-        />
+            }}
+            title={input.ub_myeon_dong}
+            onMouseover={e => {
+              handleHoverCoordinate(input);
+              handleInfoWindow(e, input);
+            }}
+            onMouseout={mouseOut}
+          />
+          {showInfoWindow && (
+            <InfoWindow showInfoWindow={showInfoWindow} mouseOut={mouseOut} />
+          )}
+        </>
       ))}
       <Polyline
         clickable={true}
         strokeColor="rgb(17, 135, 207)"
         strokeStyle="solid"
         strokeWeight={2}
-        path={newpaths}
+        path={onHoverPaths}
       />
       <Polygon
         fillColor="rgb(17, 135, 207)"
         fillOpacity={0.35}
         clickable={true}
-        paths={newpaths}
+        paths={onHoverPaths}
       />
     </NaverMap>
   );
 }
 
-const Map = () => {
+const Map = ({ dongData }) => {
   return (
     <RenderAfterNavermapsLoaded
       ncpClientId="n5yxltth29"
       error={<p>Maps Load Error</p>}
       loading={<p>Maps Loading...</p>}
     >
-      <NaverMapAPI />
+      <NaverMapAPI dongData={dongData} />
     </RenderAfterNavermapsLoaded>
   );
 };
