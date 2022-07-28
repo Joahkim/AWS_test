@@ -1,14 +1,13 @@
 import React from 'react';
 import './Header.scss';
 
-const Header = ({
-  dongData,
-  sortStore,
-  sortApplication,
-  showAllAppData,
-  showAllStoreData,
-}) => {
+import useFilter from '../../hooks/useFilter';
+
+const Header = ({ dongData }) => {
   const { applications, stores } = dongData[0];
+
+  const { sortStore, sortApplication, showAllAppData, showAllStoreData } =
+    useFilter();
 
   const goRefresh = () => {
     window.open('http://localhost:3000/regions', '_self');
